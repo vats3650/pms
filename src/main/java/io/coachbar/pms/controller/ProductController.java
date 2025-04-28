@@ -2,6 +2,7 @@ package io.coachbar.pms.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,12 +48,14 @@ public class ProductController {
 
     @PostMapping
     @Operation(summary = "Create a new Product")
+    @PreAuthorize("hasRole('ADMIN')")
     public Product createProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update existing Product by ID")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) {
         return productService.updateProduct(id, product)
                 .map(ResponseEntity::ok)
@@ -61,6 +64,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete exisitng Product by ID")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
         return productService.deleteProduct(id) ?
                 ResponseEntity.noContent().build() :
