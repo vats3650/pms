@@ -10,8 +10,10 @@ import com.mongodb.lang.NonNull;
 
 import io.coachbar.pms.util.Role;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Document(collection = "users")
 public class User {
     @Id
